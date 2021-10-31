@@ -8,6 +8,7 @@ const prueba = async (req, res, next) => {
     });
 };
 
+// Completar atributos
 const create = async (name , description, type) => {
     const id = await idMaker();
     return await axios({
@@ -25,8 +26,9 @@ const create = async (name , description, type) => {
     });
 };
 
+// Filtrar para que solo se vean las isDeleted = false.
 const fetchAll = async () => {
-    return await axios({
+    const response = await axios({
         url: `${FIWARE_URL}/entities`,
         method: 'get',
         params: {
@@ -34,20 +36,30 @@ const fetchAll = async () => {
             type: "Attraction"
         }
     });
+    return response.data;
 }
 
 const fetchById = async (id) => {
-    return await axios({
+    const response = await axios({
         url: `${FIWARE_URL}/entities/${id}`,
         method: 'get',
         params: { options: "keyValues" }
     });
+    return response.data;
 }
 // UPDATE ATRACCION NO ESTA IMPLEMENTADA HAY QUE HACERLA
-const updateAttraction = async () => {
+const update = async (id, name, description, typeAttraction, isDeleted) => {
     return await axios({
-        url: `${FIWARE_URL}/entities?type=Attraction?options=keyValues`,
-        method: 'get',        
+        url: `${FIWARE_URL}/entities/${id}/attrs/`,
+        method: 'patch',
+        params: { options: "keyValues" },        
+        data: {
+                "name": name,
+                "description": description,
+                "typeAttraction": typeAttraction,
+                "isDeleted": isDeleted
+    
+        }
     });
 }
 
@@ -59,12 +71,26 @@ const idMaker = async () => {
     }
 
 }
+// Sirve para user
+const searchByname = async (name) => {
+    const response = await axios({
+        url: `${FIWARE_URL}/entities/`,
+        method: 'get',
+        params: {
+            type: "Attraction",
+            q: `name==${name}`,
+            options: "keyValues",
+        }
+    });
+    return response.data;
+}
 
 module.exports = {
     prueba,
     create,
     fetchAll,
-    updateAttraction,
+    update,
     idMaker,
-    fetchById
+    fetchById,
+    searchByname
 }
