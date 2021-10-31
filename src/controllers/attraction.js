@@ -11,13 +11,21 @@ const pruebaFiware = async (req, res, next) => {
 
 const create = async (req, res, next) => {
     try {
-        const { name, description, type } = req.body;
-        const response = await AttractionService.create(name, description, type);
+        const { name,
+            description,
+            typeAttraction,
+            image,
+            rating,
+            dateHour,
+            location,
+            address} = req.body;
+        
+        const response = await AttractionService.create(name , description, typeAttraction, image, rating, dateHour, location, address);
         if (response) {
             res.json({ 'msg' : 'ok'});
         }
     } catch (err) {
-        next(err);
+        console.log(err);
     }
 };
 
@@ -42,8 +50,18 @@ const fetchById = async (req, res, next) => {
 
 const update = async (req, res, next) => {
     try {
-        const { id, name, description, typeAttraction, isDeleted } = req.body;
-        const response = await AttractionService.update(id, name, description, typeAttraction, isDeleted);      
+        const { id,
+            name,
+            image,
+            rating,
+            dateHour,
+            location,
+            address,
+            createdAt,
+            description,
+            typeAttraction,
+            isDeleted } = req.body;
+        const response = await AttractionService.update(id, name, image, rating , dateHour, location, address, createdAt,description, typeAttraction, isDeleted);      
         if (response.status == 204) {
             res.status(200).json(
                 {
@@ -52,7 +70,7 @@ const update = async (req, res, next) => {
             )
         }
     } catch (err) {
-        console.log(err)
+        res.send(err);
     }
 }
 
@@ -62,7 +80,7 @@ const searchByname = async (req, res, next) => {
         const response = await AttractionService.searchByname(name);
         res.send(response)
     } catch (err) {
-        console.log(err)
+        res.send(err);
     }
 }
 
