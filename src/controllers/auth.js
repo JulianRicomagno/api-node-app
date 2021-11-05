@@ -6,10 +6,16 @@ const login = async (req, res, next) => {
     try {
         const {
             email,
-            passwd
+            passwd,
+            device
         } = req.body;
         
-        const user = await UserService.checkEmail(email);
+        if (device === 'web') {
+            const user = await UserService.checkEmail(email);
+        } else {
+            // user = await UserService.checkEmail(email);            
+        }
+ 
         if (!user) {
             return res.status(400).json({
                 msg: ERROR.INVALID_USER_PASS,

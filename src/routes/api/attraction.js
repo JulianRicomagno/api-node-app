@@ -9,5 +9,6 @@ router.get('/id', AttractionController.fetchById);
 router.patch('/update', AttractionController.update);
 router.get('/search', AttractionController.searchByname);
 router.get('/search/type', AttractionController.searchByType);
+router.get('/types', AttractionController.types);
 
 module.exports = router;

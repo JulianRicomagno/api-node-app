@@ -1,4 +1,5 @@
 const { AttractionService } = require('../services');
+const { TypeAttraction } = require('../constants/typeAttraction');
 
 const pruebaFiware = async (req, res, next) => {
     try {
@@ -96,6 +97,15 @@ const searchByType = async (req, res, next) => {
     }
 }
 
+const types = async (req, res, next) => {
+    try {
+        res.json(TypeAttraction)
+    } catch (err) {
+        res.send(err);
+    }
+}
+
+
 module.exports = {
     pruebaFiware,
     create,
@@ -103,6 +113,7 @@ module.exports = {
     fetchById,
     update,
     searchByname,
-    searchByType
+    searchByType,
+    types
 }
 

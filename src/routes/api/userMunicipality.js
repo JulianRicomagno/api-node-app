@@ -1,12 +1,8 @@
-// const { Router } = require('express');
-// const router = Router();
-// const AttractionController = require('../../controllers/attraction')
+const { Router } = require('express');
+const router = Router();
+const { UserMunicipalityController } = require('../../controllers');
 
-// router.get('/pruebafiware', AttractionController.pruebaFiware);
-// router.post('/create', AttractionController.create);
-// router.get('/fetchall', AttractionController.fetchAll);
-// router.get('/id', AttractionController.fetchById);
-// router.patch('/update', AttractionController.update);
-// router.get('/search', AttractionController.searchByname);
+router.post('/create', UserMunicipalityController.create);
+router.get('/fetchall', UserMunicipalityController.fetchAll);
 
-// module.exports = router;
+module.exports = router;

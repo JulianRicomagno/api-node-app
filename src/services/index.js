@@ -1,3 +1,4 @@
 module.exports = {
-    AttractionService: require('./attraction')
+    AttractionService: require('./attraction'),
+    UserMunicipalityService: require('./userMunicipality')
 };
