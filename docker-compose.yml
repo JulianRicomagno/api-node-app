@@ -1,0 +1,17 @@
+version: "3.3"
+
+networks:
+  code-network:
+    driver: bridge
+
+services:
+  nodeTest:
+    container_name: nodejs
+    image: polyverse/node-echo-server
+    ports:
+      - 8080:8080
+  grafana:
+    container_name: grafana
+    image: grafana/grafana
+    ports:
+      - 3000:3000
