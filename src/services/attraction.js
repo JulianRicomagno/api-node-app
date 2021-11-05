@@ -2,6 +2,7 @@ const axios = require('axios');
 const moment = require('moment');
 const FIWARE_URL = process.env.FIWARE_URL;
 const dateFormat = "YYYY-MM-DD";
+const mongoose = require('mongoose');
 
 const prueba = async (req, res, next) => {
     return await axios({
@@ -12,7 +13,7 @@ const prueba = async (req, res, next) => {
 
 // Completar atributos   INVESTIGAR COMO MANDAR LOCATION Y DATE HOUR
 const create = async (name , description, typeAttraction, image, rating, dateHour, location, address) => {
-    const id = await idMaker();
+    const id = new mongoose.Types.ObjectId();
     return await axios({
         url: `${FIWARE_URL}/entities`,
         method: 'post',
@@ -79,16 +80,6 @@ const update = async (id, name, image, rating , dateHour, location, address, cre
     });
 }
 
-const idMaker = async () => {
-    const listIds = await fetchAll();
-    id = 1;
-    if (listIds.length > 0) {
-        const num = listIds[listIds.length - 1].id.split(":");
-        id = (parseInt(num[3]) + 1).toString();
-    }
-    return id;
-
-}
 // Sirve para user
 const searchByname = async (name) => {
     const response = await axios({
@@ -103,12 +94,25 @@ const searchByname = async (name) => {
     return response.data;
 }
 
+const searchByType = async (typeAttraction) => {
+    const response = await axios({
+        url: `${FIWARE_URL}/entities/`,
+        method: 'get',
+        params: {
+            type: "Attraction",
+            q: `typeAttraction==${typeAttraction}`,
+            options: "keyValues",
+        }
+    });
+    return response.data;
+}
+
 module.exports = {
     prueba,
     create,
     fetchAll,
     update,
-    idMaker,
     fetchById,
-    searchByname
+    searchByname,
+    searchByType
 }

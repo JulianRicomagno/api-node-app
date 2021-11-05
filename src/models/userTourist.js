@@ -25,7 +25,7 @@
 //         'hotel': 'String',
 //         'dayFrom': 'Date',
 //         'dayTo': 'Date',
-//         'totalDays' :[ Es un Aray de dias. Adentro tiene un Array de atracciones.
+//         'totalDays' :[ Es un Array de dias. Adentro tiene un Array de atracciones.
 //                 {
 //                 'attendanceDate': "2021-10-05",
 //                 'isDayOff' : 'Boolean',

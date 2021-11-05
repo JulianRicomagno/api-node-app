@@ -11,6 +11,7 @@ const pruebaFiware = async (req, res, next) => {
 
 const create = async (req, res, next) => {
     try {
+        console.log(req.body);
         const { name,
             description,
             typeAttraction,
@@ -44,7 +45,7 @@ const fetchById = async (req, res, next) => {
         const response = await AttractionService.fetchById(id);
         res.send(response);
     } catch (err) {
-        res.send(err.response.data);
+        res.status(400).json(err.response.data);
     }
 }
 
@@ -84,12 +85,24 @@ const searchByname = async (req, res, next) => {
     }
 }
 
+const searchByType = async (req, res, next) => {
+    try {
+        const { typeAttraction } = req.body;
+        const response = await AttractionService.searchByType(typeAttraction);
+        res.send(response)
+        console.log(response)
+    } catch (err) {
+        res.send(err);
+    }
+}
+
 module.exports = {
     pruebaFiware,
     create,
     fetchAll,
     fetchById,
     update,
-    searchByname
+    searchByname,
+    searchByType
 }
 
