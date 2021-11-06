@@ -50,8 +50,18 @@ const fetchAll = async () => {
     return response.data;
 }
 
+const deleteUser = async (userId) => {
+    const response = await axios({
+        url: `${FIWARE_URL}/entities/${userId}`,
+        method: 'delete',
+    });
+    return response.data;
+    console.log(response.data)
+}
+
 module.exports = {
     create,
     checkEmail,
-    fetchAll
+    fetchAll,
+    deleteUser
 }
