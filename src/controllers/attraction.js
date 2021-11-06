@@ -12,7 +12,6 @@ const pruebaFiware = async (req, res, next) => {
 
 const create = async (req, res, next) => {
     try {
-        console.log(req.body);
         const { name,
             description,
             typeAttraction,
@@ -27,7 +26,7 @@ const create = async (req, res, next) => {
             res.json({ 'msg' : 'ok'});
         }
     } catch (err) {
-        console.log(err);
+        next(err);
     }
 };
 
