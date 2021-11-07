@@ -24,23 +24,6 @@ const create = async (userName , passwd, email, role) => {
     });
 };
 
-const update = async (userName, passwd, email, role, id, isDeleted) => {
-    return await axios({
-        url: `${FIWARE_URL}/entities/${id}/attrs/`,
-        method: 'patch',
-        params: { options: "keyValues" },        
-        data: {
-            "userName": userName ,
-            "passwd": passwd ,
-            "email": email ,
-            "role": role,
-            "isDeleted": isDeleted,
-            "updatedAt": moment(new Date()).format(dateFormat)
-        }
-    });
-}
-
 module.exports = {
     create,
-    update
 }

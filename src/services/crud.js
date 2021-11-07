@@ -3,6 +3,7 @@ const moment = require('moment');
 const FIWARE_URL = process.env.FIWARE_URL;
 const dateFormat = "YYYY-MM-DD";
 const mongoose = require('mongoose');
+const Utils = require('../util/utils')
 
 const fetchAll = async (typeEntity) => {
     const response = await axios({
@@ -51,9 +52,23 @@ const logicDeleteEntity = async (id) => {
     return response;
 }
 
+const update = async (entity) => {
+    const dataUpdate = Utils.cleanKeys(entity,["id","type"]);
+    return await axios({
+        url: `${FIWARE_URL}/entities/${entity.id}/attrs/`,
+        method: 'patch',
+        params: { options: "keyValues" },        
+        data: {
+            ...dataUpdate,
+            "updatedAt": moment(new Date()).format(dateFormat),                           
+        }
+    });
+}
+
 module.exports = {
     fetchById,
     searchByName,
     fetchAll,
     logicDeleteEntity,
+    update
 }

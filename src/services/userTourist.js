@@ -16,7 +16,7 @@ const create = async (user, passwdHash) => {
         "type": "UserTourist",
         "createdAt": { "value": moment(new Date()).format(dateFormat) },
         "updatedAt": { "value": moment(new Date()).format(dateFormat) },
-        "isDeleted": "false",
+        "isDeleted": { "value": false},
         "userName": { "value": user.userName },
         "email": { "value": user.email },
         "passwd": { "value": passwdHash },

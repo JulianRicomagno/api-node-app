@@ -20,7 +20,6 @@ const create = async (req, res, next) => {
             })
         }
       const passwdHash = bcryptjs.hashSync(passwd, salt);
-        
       const response = await UserTouristService.create(req.body, passwdHash);
 
         if (response) {
@@ -42,7 +41,7 @@ const fetchAll = async (req, res, next) => {
 
 const deleteUser = async (req, res, next) => {
     try {
-        const response = await UserMunicipalityService.deleteUser(req.body.id);
+        const response = await CrudService.logicDeleteEntity(req.body.id);
         if(response) res.json({ 'delete' : true });
     } catch (err) {
         next(err);
@@ -51,15 +50,7 @@ const deleteUser = async (req, res, next) => {
 
 const update = async (req, res, next) => {
     try {
-        const { id,
-            userName,
-            passwd,
-            email,
-            role,
-            isDeleted} = req.body;
-        
-        const passwdHash = bcryptjs.hashSync(passwd, salt);
-        const response = await UserMunicipalityService.update(userName, passwdHash, email, role, id, isDeleted);      
+        const response = await CrudService.update(req.body);      
         if (response.status == 204) {
             res.status(200).json(
                 {
@@ -72,9 +63,28 @@ const update = async (req, res, next) => {
     }
 }
 
+const updateItinerary = async (req, res, next) => {
+    // try {
+    //     const { itinerary, generalInfo, id, type } = req.body;
+    //     const dataUpdate = { id, type, {...itinerary} };
+    //     console.log(dataUpdate)
+    //     const response = await CrudService.update(req.body);      
+    //     if (response.status == 204) {
+    //         res.status(200).json(
+    //             {
+    //                 "msg": "Update ok"
+    //             }
+    //         )
+    //     }
+    // } catch (err) {
+    //     res.send(err);
+    // }
+}
+
 module.exports = {
     create,
     fetchAll,
     deleteUser,
-    update
+    update,
+    updateItinerary
 };
