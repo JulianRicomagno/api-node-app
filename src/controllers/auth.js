@@ -1,7 +1,9 @@
-const { UserMunicipalityService } = require('../services');
+const { AuthService } = require('../services');
 const bcryptjs = require('bcryptjs');
-const  { generateJwt, ERROR } = require('../helpers')
+const { generateJwt, ERROR } = require('../helpers')
+const Util = require('../util/utils');
 const USER_DEVICE_ADMIN = process.env.DEVICE_ADMIN;
+
 
 const login = async (req, res, next) => {
     try {
@@ -11,13 +13,13 @@ const login = async (req, res, next) => {
             device
         } = req.body;
 
+        let user = "";
         if (USER_DEVICE_ADMIN === device) {
-            user = await UserMunicipalityService.checkAttribute(email, "email");
-         } 
-        //     // user = await UserService.checkEmail(email);
-        // }
-
-        console.log(user)
+            user = await AuthService.checkAttribute("UserMunicipality", email, "email");
+        } else {
+            user = await AuthService.checkAttribute("UserTourist", email, "email");
+        }
+        
         if (!user) {
             return res.status(400).json({
                 msg: ERROR.INVALID_USER_PASS,
@@ -38,7 +40,7 @@ const login = async (req, res, next) => {
         }
 
         const token = await generateJwt(user._id);
-
+        user = Util.cleanKeys(user, "passwd");
         res.send({
             user,
             token

@@ -51,15 +51,9 @@ const deleteUser = async (req, res, next) => {
 
 const update = async (req, res, next) => {
     try {
-        const { id,
-            userName,
-            passwd,
-            email,
-            role,
-            isDeleted} = req.body;
-        
-        const passwdHash = bcryptjs.hashSync(passwd, salt);
-        const response = await UserMunicipalityService.update(userName, passwdHash, email, role, id, isDeleted);      
+        const passwdHash = bcryptjs.hashSync(req.body.passwd, salt);
+        const updateData = { ...req.body, "passwd": passwdHash }
+        const response = await CrudService.update(updateData);      
         if (response.status == 204) {
             res.status(200).json(
                 {

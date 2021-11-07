@@ -3,6 +3,7 @@ const moment = require('moment');
 const FIWARE_URL = process.env.FIWARE_URL;
 const dateFormat = "YYYY-MM-DD";
 const mongoose = require('mongoose');
+const Utils = require('../util/utils')
 
 // Completar atributos   INVESTIGAR COMO MANDAR LOCATION Y DATE HOUR
 const create = async (name , description, typeAttraction, image, rating, dateHour, location, address) => {
@@ -30,22 +31,14 @@ const create = async (name , description, typeAttraction, image, rating, dateHou
 };
 
 const update = async (attraction) => {
+    const dataUpdate = Utils.cleanKeys(attraction,["id","type"]);
     return await axios({
         url: `${FIWARE_URL}/entities/${attraction.id}/attrs/`,
         method: 'patch',
         params: { options: "keyValues" },        
         data: {
-            "name": attraction.name ,
-            "image":  attraction.image ,
-            "rating": attraction.rating ,
-            "dateAndHour": attraction.dateHour ,
-            "location": attraction.location ,
-            "address": attraction.address ,                        
-            "description": attraction.description ,
-            "typeAttraction": attraction.typeAttraction ,
-            "createdAt": attraction.createdAt ,
-            "updatedAt": moment(new Date()).format(dateFormat),                        
-            "isDeleted": attraction.isDeleted     
+            ...dataUpdate,
+            "updatedAt": moment(new Date()).format(dateFormat),                           
         }
     });
 }

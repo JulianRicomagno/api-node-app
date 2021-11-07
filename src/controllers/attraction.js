@@ -43,7 +43,7 @@ const fetchById = async (req, res, next) => {
 
 const update = async (req, res, next) => {
     try {
-        const response = await AttractionService.update(req.body);      
+        const response = await CrudService.update(req.body);      
         if (response.status == 204) {
             res.status(200).json(
                 {
