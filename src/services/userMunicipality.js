@@ -24,44 +24,23 @@ const create = async (userName , passwd, email, role) => {
     });
 };
 
-const checkEmail = async (email) => {
-    const response = await axios({
-        url: `${FIWARE_URL}/entities/`,
-        method: 'get',
-        params: {
-            type: "UserMunicipality",
-            q: `email==${email}`,
-            options: "keyValues",
+const update = async (userName, passwd, email, role, id, isDeleted) => {
+    return await axios({
+        url: `${FIWARE_URL}/entities/${id}/attrs/`,
+        method: 'patch',
+        params: { options: "keyValues" },        
+        data: {
+            "userName": userName ,
+            "passwd": passwd ,
+            "email": email ,
+            "role": role,
+            "isDeleted": isDeleted,
+            "updatedAt": moment(new Date()).format(dateFormat)
         }
     });
-    return response.data;
-}
-
-const fetchAll = async () => {
-    const response = await axios({
-        url: `${FIWARE_URL}/entities`,
-        method: 'get',
-        params: {
-            type: "UserMunicipality",
-            q: `isDeleted==false`,
-            options: "keyValues",            
-        }
-    });
-    return response.data;
-}
-
-const deleteUser = async (userId) => {
-    const response = await axios({
-        url: `${FIWARE_URL}/entities/${userId}`,
-        method: 'delete',
-    });
-    return response.data;
-    console.log(response.data)
 }
 
 module.exports = {
     create,
-    checkEmail,
-    fetchAll,
-    deleteUser
+    update
 }

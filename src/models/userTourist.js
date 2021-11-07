@@ -6,7 +6,6 @@
 //     'email': 'String',
 //     'createdAt': 'Date',
 //     'updatedAt': 'Date',
-//     'role': 'ObjectId',
 //     'status' : 'Boolean',
 //     'languagePreference' : 'ObjectId',
     // Segundo paso completar datos para DataAnalitycs

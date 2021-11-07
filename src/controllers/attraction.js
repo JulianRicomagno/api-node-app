@@ -1,14 +1,6 @@
 const { AttractionService } = require('../services');
 const { TypeAttraction } = require('../constants/typeAttraction');
-
-const pruebaFiware = async (req, res, next) => {
-    try {
-        const response = await AttractionService.idMaker();
-        res.send(`${response}`);
-    } catch (err) {
-        next(err);
-    }
-};
+const { CrudService } = require('../services')
 
 const create = async (req, res, next) => {
     try {
@@ -32,7 +24,7 @@ const create = async (req, res, next) => {
 
 const fetchAll = async (req, res, next) => {
     try {
-        const response = await AttractionService.fetchAll();
+        const response = await CrudService.fetchAll("Attraction");
         res.send(response);
     } catch (err) {
         next(err);
@@ -42,7 +34,7 @@ const fetchAll = async (req, res, next) => {
 const fetchById = async (req, res, next) => {
     try {
         const { id } = req.body;
-        const response = await AttractionService.fetchById(id);
+        const response = await CrudService.fetchById(id);
         res.send(response);
     } catch (err) {
         res.status(400).json(err.response.data);
@@ -51,18 +43,7 @@ const fetchById = async (req, res, next) => {
 
 const update = async (req, res, next) => {
     try {
-        const { id,
-            name,
-            image,
-            rating,
-            dateHour,
-            location,
-            address,
-            createdAt,
-            description,
-            typeAttraction,
-            isDeleted } = req.body;
-        const response = await AttractionService.update(id, name, image, rating , dateHour, location, address, createdAt,description, typeAttraction, isDeleted);      
+        const response = await AttractionService.update(req.body);      
         if (response.status == 204) {
             res.status(200).json(
                 {
@@ -78,7 +59,7 @@ const update = async (req, res, next) => {
 const searchByname = async (req, res, next) => {
     try {
         const { name } = req.body;
-        const response = await AttractionService.searchByname(name);
+        const response = await CrudService.searchByname("Attraction",name);
         res.send(response)
     } catch (err) {
         res.send(err);
@@ -106,7 +87,6 @@ const types = async (req, res, next) => {
 
 
 module.exports = {
-    pruebaFiware,
     create,
     fetchAll,
     fetchById,
