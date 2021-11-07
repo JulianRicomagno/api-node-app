@@ -1,4 +1,6 @@
 module.exports = {
     AttractionController: require('./attraction'),
-    UserMunicipalityController: require('./userMunicipality'),    
+    UserMunicipalityController: require('./userMunicipality'),
+    UserTourist: require('./userTourist'),
+    AuthController: require('./auth')
 };

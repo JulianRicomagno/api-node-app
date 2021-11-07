@@ -6,5 +6,6 @@ exports.ERROR = {
     USER_INACTVE: 'User inactive',
     ERROR_LOGIN: "ERROR - Something went wrong",
     ERROR_SIGNUP: "User / Email alredy exist",
-    INVALID_DATA: "Invalid data"
+    INVALID_DATA: "Invalid data",
+    ERROR_JWT_TOKEN: "Could not generate the token"
 }

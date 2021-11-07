@@ -1,5 +1,6 @@
 const jwt = require('jsonwebtoken');
 const SECRET_KEY = process.env.SECRET_KEY;
+const { ERROR } = require('../helpers');
 
 exports.generateJwt = (_id) => {
     
@@ -10,7 +11,7 @@ exports.generateJwt = (_id) => {
         }, (err, token) => {
             if (err) {
                 console.log(err);
-                reject('could not generate the token');   
+                reject(ERROR.ERROR_JWT_TOKEN);   
             } else {
                 resolve(token);
             }

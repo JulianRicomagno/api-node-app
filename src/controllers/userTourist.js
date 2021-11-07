@@ -1,44 +1,80 @@
-const AuthService = require('../services/auth');
-const User = require('../models/userTourist');
+const { AuthService } = require('../services');
+const { CrudService } = require('../services');
+const { UserTouristService } = require('../services');
 const bcryptjs = require('bcryptjs');
-const { ERROR } = require('../helpers')
+const { ERROR } = require('../helpers');
+const salt = bcryptjs.genSaltSync(10);
 
-const addUser = async (req, res, next) => {
-  try {
-    const {
-      name,
-      email,
-      passwd
-    } = req.body;
-    const userEmail = await AuthService.checkEmail(email);
-    const userName = await User.findOne({
-      name: name
-    });
+const create = async (req, res, next) => {
+    try {
+        const { userName,
+            passwd,
+            email } = req.body;
 
-    if (userName !== null || userEmail) {
-      return res.status(400).json({
-        msg: ERROR.ERROR_SIGNUP
-      })
+        const userEmailVerify = await AuthService.checkAttribute("UserTourist", email, "email");
+        const userNameVerify = await AuthService.checkAttribute("UserTourist" ,userName, "userName");
+      
+        if (userNameVerify || userEmailVerify) {
+            return res.status(400).json({
+                msg: ERROR.ERROR_SIGNUP
+            })
+        }
+      const passwdHash = bcryptjs.hashSync(passwd, salt);
+        
+      const response = await UserTouristService.create(req.body, passwdHash);
+
+        if (response) {
+            res.json({ 'msg' : 'ok'});
+        }
+    } catch (err) {
+        next(err);
     }
-
-    const user = new User({
-      name,
-      email,
-      passwd
-    });
-
-    const salt = bcryptjs.genSaltSync(10);
-    user.passwd = bcryptjs.hashSync(passwd, salt);
-
-    AuthService.addUser(user);
-    res.status(201).json({
-      msg: "Success"
-    })
-  } catch (error) {
-    next(error);
-  }
 };
 
+const fetchAll = async (req, res, next) => {
+    try {
+        const response = await CrudService.fetchAll("UserTourist");
+        res.send(response);
+    } catch (err) {
+        next(err);
+    }
+};
+
+const deleteUser = async (req, res, next) => {
+    try {
+        const response = await UserMunicipalityService.deleteUser(req.body.id);
+        if(response) res.json({ 'delete' : true });
+    } catch (err) {
+        next(err);
+    }
+}
+
+const update = async (req, res, next) => {
+    try {
+        const { id,
+            userName,
+            passwd,
+            email,
+            role,
+            isDeleted} = req.body;
+        
+        const passwdHash = bcryptjs.hashSync(passwd, salt);
+        const response = await UserMunicipalityService.update(userName, passwdHash, email, role, id, isDeleted);      
+        if (response.status == 204) {
+            res.status(200).json(
+                {
+                    "msg": "Update ok"
+                }
+            )
+        }
+    } catch (err) {
+        res.send(err);
+    }
+}
+
 module.exports = {
-  addUser
+    create,
+    fetchAll,
+    deleteUser,
+    update
 };

@@ -1,6 +1,9 @@
 const { UserMunicipalityService } = require('../services');
+const { AuthService } = require('../services');
+const { CrudService } = require('../services');
 const bcryptjs = require('bcryptjs');
 const { ERROR } = require('../helpers');
+const salt = bcryptjs.genSaltSync(10);
 
 const create = async (req, res, next) => {
     try {
@@ -9,17 +12,14 @@ const create = async (req, res, next) => {
             email,
             role } = req.body;
 
-        const user = await UserMunicipalityService.checkEmail(email);
-        
-        if (user.length !== 0) {
-            if (user[0].userName !== null || user[0].email !== null) {
+        const userEmailVerify = await AuthService.checkAttribute("UserMunicipality",email, "email");
+        const userNameVerify = await AuthService.checkAttribute("UserMunicipality",userName, "userName");    
+        console.log(userEmailVerify)    
+        if (userNameVerify || userEmailVerify) {
             return res.status(400).json({
                 msg: ERROR.ERROR_SIGNUP
             })
         }
-        }
-
-        const salt = bcryptjs.genSaltSync(10);
         const passwdHash = bcryptjs.hashSync(passwd, salt);
         
         const response = await UserMunicipalityService.create(userName, passwdHash, email, role);
@@ -33,7 +33,7 @@ const create = async (req, res, next) => {
 
 const fetchAll = async (req, res, next) => {
     try {
-        const response = await UserMunicipalityService.fetchAll();
+        const response = await CrudService.fetchAll("UserMunicipality");
         res.send(response);
     } catch (err) {
         next(err);
@@ -42,15 +42,39 @@ const fetchAll = async (req, res, next) => {
 
 const deleteUser = async (req, res, next) => {
     try {
-        console.log(req.body.id);
-        res.send(await UserMunicipalityService.deleteUser(req.body.id));
+        const response = await CrudService.logicDeleteEntity(req.body.id);
+        if(response) res.json({ 'delete' : true });
     } catch (err) {
         next(err);
     }
-
 }
+
+const update = async (req, res, next) => {
+    try {
+        const { id,
+            userName,
+            passwd,
+            email,
+            role,
+            isDeleted} = req.body;
+        
+        const passwdHash = bcryptjs.hashSync(passwd, salt);
+        const response = await UserMunicipalityService.update(userName, passwdHash, email, role, id, isDeleted);      
+        if (response.status == 204) {
+            res.status(200).json(
+                {
+                    "msg": "Update ok"
+                }
+            )
+        }
+    } catch (err) {
+        res.send(err);
+    }
+}
+
 module.exports = {
     create,
     fetchAll,
     deleteUser,
+    update
 }
