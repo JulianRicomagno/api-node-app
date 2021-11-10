@@ -1,12 +1,12 @@
-const TypeAttraction = {
-    "Hotel" : 1,
-    "Punto de interés": 2,
-    "Plazas": 3,
-    "Evento": 4,
-    "Lugares Historicos": 5,
-    "Gastronomia": 6,
-    "Monumento": 7
-};
+const TypeAttraction = [
+    "Hotel",
+    "Punto de interés",
+    "Plazas",
+    "Evento",
+    "Lugares Historicos",
+    "Gastronomia",
+    "Monumento",
+];
 
 module.exports = {
     TypeAttraction
