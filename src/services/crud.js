@@ -15,7 +15,8 @@ const fetchAll = async (typeEntity) => {
             options: "keyValues",            
         }
     });
-    return response.data;
+    const dataClean = response.data.map(data => { return Utils.cleanKeys(data, ["passwd"]) } );
+    return dataClean;
 }
 
 const fetchById = async (id) => {

@@ -1,9 +1,11 @@
 const { AuthService } = require('../services');
 const { CrudService } = require('../services');
 const { UserTouristService } = require('../services');
+const { StatisticService } = require('../services');
 const bcryptjs = require('bcryptjs');
 const { ERROR } = require('../helpers');
 const salt = bcryptjs.genSaltSync(10);
+const Utils = require('../util/utils');
 
 const create = async (req, res, next) => {
     try {
@@ -64,21 +66,21 @@ const update = async (req, res, next) => {
 }
 
 const updateItinerary = async (req, res, next) => {
-    // try {
-    //     const { itinerary, generalInfo, id, type } = req.body;
-    //     const dataUpdate = { id, type, {...itinerary} };
-    //     console.log(dataUpdate)
-    //     const response = await CrudService.update(req.body);      
-    //     if (response.status == 204) {
-    //         res.status(200).json(
-    //             {
-    //                 "msg": "Update ok"
-    //             }
-    //         )
-    //     }
-    // } catch (err) {
-    //     res.send(err);
-    // }
+    try {
+        const { newAttraction, generalInfo } = req.body;
+        const responseStatistic = await StatisticService.create(newAttraction, generalInfo);
+        dataClean = Utils.cleanKeys(entity,["generalInfo","newAttraction"]);
+        const response = await CrudService.update(dataClean);      
+        if (response.status == 204) {
+            res.status(200).json(
+                {
+                    "msg": "Update ok"
+                }
+            )
+        }
+    } catch (err) {
+        res.send(err);
+    }
 }
 
 module.exports = {
