@@ -27,7 +27,6 @@ class Server {
   }
 
   routes() {
-    // this.app.use(this.usersPath, require('../routes/api/userTourist'));
     this.app.use(this.authPath, require('../routes/api/auth'));
     this.app.use(this.attractionPath, require('../routes/api/attraction'));
     this.app.use(this.usersPath, require('../routes/api/userTourist'));
