@@ -1,6 +1,6 @@
 const jwt = require('jsonwebtoken');
 const SECRET_KEY = process.env.SECRET_KEY;
-const User = require('../../models/user')
+const { CrudService } = require('../../services')
 const Boom = require('@hapi/boom');
 const TOKEN_HEADER = process.env.TOKEN_HEADER;
 const {
@@ -18,14 +18,14 @@ const validateJWT = async (req, res, next) => {
         const {
             _id
         } = jwt.verify(token, SECRET_KEY);
-        const user = await User.findById(_id);
+        const user = await CrudService.fetchById(_id);
 
         if (!user) {
             return res.status(401).json({
                 msg: ERROR.INVALID_TOKEN_DB
             });
         }
-        if (user.deleted) {
+        if (user.isDeleted) {
             return res.status(401).json({
                 msg: ERROR.USER_INACTVE
             })

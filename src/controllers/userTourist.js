@@ -4,7 +4,6 @@ const { UserTouristService } = require('../services');
 const { StatisticService } = require('../services');
 const bcryptjs = require('bcryptjs');
 const { ERROR } = require('../helpers');
-const salt = bcryptjs.genSaltSync(10);
 const Utils = require('../util/utils');
 
 const create = async (req, res, next) => {
@@ -21,8 +20,9 @@ const create = async (req, res, next) => {
                 msg: ERROR.ERROR_SIGNUP
             })
         }
-      const passwdHash = bcryptjs.hashSync(passwd, salt);
-      const response = await UserTouristService.create(req.body, passwdHash);
+        const salt = bcryptjs.genSaltSync(10);
+        const passwdHash = bcryptjs.hashSync(passwd, salt);
+        const response = await UserTouristService.create(req.body, passwdHash);
 
         if (response) {
             res.json({ 'msg' : 'ok'});
@@ -66,12 +66,14 @@ const update = async (req, res, next) => {
 }
 
 const updateItinerary = async (req, res, next) => {
-    try {
+    try {    
         const { newAttraction, generalInfo } = req.body;
         const responseStatistic = await StatisticService.create(newAttraction, generalInfo);
-        dataClean = Utils.cleanKeys(entity,["generalInfo","newAttraction"]);
-        const response = await CrudService.update(dataClean);      
-        if (response.status == 204) {
+        dataClean = Utils.cleanKeys(req.body, ["generalInfo", "newAttraction"]);
+        const response = await CrudService.update(dataClean);
+        console.log(response.status)
+        console.log(responseStatistic.status)
+        if (response.status == 204 && responseStatistic.status == 201) {
             res.status(200).json(
                 {
                     "msg": "Update ok"

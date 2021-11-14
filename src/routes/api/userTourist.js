@@ -1,11 +1,13 @@
-const { Router } = require('express');
-const router = Router();
+const schema = require('../../schemas/userTourist');
+const { validate } = require('../middlewares')
 const { UserTourist } = require('../../controllers');
 
-router.post('/create', UserTourist.create);
-router.get('/fetchall', UserTourist.fetchAll);
-router.delete('/delete', UserTourist.deleteUser);
-router.post('/update', UserTourist.update);
-router.post('/updateitinerary', UserTourist.updateItinerary);
+module.exports = router => {
+    router.post('/create', validate(schema), UserTourist.create);
+    router.get('/fetchall', UserTourist.fetchAll);
+    router.delete('/delete', UserTourist.deleteUser);
+    router.post('/update', UserTourist.update);
+    router.post('/updateitinerary', UserTourist.updateItinerary);
+    return router;
+}
 
-module.exports = router;

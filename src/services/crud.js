@@ -54,7 +54,7 @@ const logicDeleteEntity = async (id) => {
 }
 
 const update = async (entity) => {
-    const dataUpdate = Utils.cleanKeys(entity,["id","type"]);
+    const dataUpdate = Utils.cleanKeys(entity,["id","type","updateAt"]);
     return await axios({
         url: `${FIWARE_URL}/entities/${entity.id}/attrs/`,
         method: 'patch',
