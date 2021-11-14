@@ -53,7 +53,8 @@ const update = async (req, res, next) => {
     try {
         const passwdHash = bcryptjs.hashSync(req.body.passwd, salt);
         const updateData = { ...req.body, "passwd": passwdHash }
-        const response = await CrudService.update(updateData);      
+        const response = await CrudService.update(updateData);
+        
         if (response.status == 204) {
             res.status(200).json(
                 {

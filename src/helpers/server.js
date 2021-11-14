@@ -1,16 +1,17 @@
 const express = require('express');
 const cors = require('cors');
 const morgan = require('morgan');
-const mongoose  = require('./mongoose');
-
+const mongoose = require('./mongoose');
+const Router = require('../routes');
+// const validateJWT = require('../routes/middlewares/validate-jwt')
 class Server {
   constructor() {
     this.app = express();
     this.PORT = process.env.PORT;
-    this.usersPath = '/api/user';
-    this.authPath = '/api/auth';
-    this.attractionPath = '/api/attraction';
-    this.userMunicipality = '/api/usermunicipality';                              
+    // this.usersPath = '/api/user';
+    // this.authPath = '/api/auth';
+    // this.attractionPath = '/api/attraction';
+    // this.userMunicipality = '/api/usermunicipality';                              
     this.connectDb();
     this.middlewares();
     this.routes();
@@ -27,10 +28,13 @@ class Server {
   }
 
   routes() {
-    this.app.use(this.authPath, require('../routes/api/auth'));
-    this.app.use(this.attractionPath, require('../routes/api/attraction'));
-    this.app.use(this.usersPath, require('../routes/api/userTourist'));
-    this.app.use(this.userMunicipality, require('../routes/api/userMunicipality'));
+    // this.app.use(this.authPath, require('../routes/api/auth'));
+    // this.app.use(this.attractionPath, require('../routes/api/attraction'));
+    // this.app.use(this.usersPath, require('../routes/api/userTourist'));
+    // this.app.use(this.userMunicipality, require('../routes/api/userMunicipality'));
+
+    Router.configure(this.app);
+    return;    
   }
 
   listen() {

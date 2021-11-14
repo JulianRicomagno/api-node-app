@@ -5,7 +5,6 @@ const dateFormat = "YYYY-MM-DD";
 const mongoose = require('mongoose');
 
 const create = async (newAttraction, generalInfo) => {
-
     const id = new mongoose.Types.ObjectId();
     return await axios({
         url: `${FIWARE_URL}/entities`,
@@ -22,7 +21,8 @@ const create = async (newAttraction, generalInfo) => {
             "gender": { "value": generalInfo.city },
             "typeAttraction": { "value": newAttraction.typeAttraction },
             "nameAttraction": { "value": newAttraction.name },
-            "attendanceDate": { "value": newAttraction.attendanceDate }
+            "attendanceDate": { "value": newAttraction.attendanceDate },
+            "isDeleted": { "value": false}
         }
     });
 };

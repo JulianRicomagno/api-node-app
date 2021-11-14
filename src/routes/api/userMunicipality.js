@@ -1,10 +1,13 @@
-const { Router } = require('express');
-const router = Router();
+const schema = require('../../schemas/userMunicipality');
+const { validate } = require('../middlewares')
 const { UserMunicipalityController } = require('../../controllers');
 
-router.post('/create', UserMunicipalityController.create);
-router.get('/fetchall', UserMunicipalityController.fetchAll);
-router.delete('/delete', UserMunicipalityController.deleteUser);
-router.post('/update', UserMunicipalityController.update);
+module.exports = router => {
+    router.post('/create', validate(schema), UserMunicipalityController.create);
+    router.get('/fetchall', UserMunicipalityController.fetchAll);
+    router.delete('/delete', UserMunicipalityController.deleteUser);
+    router.post('/update', UserMunicipalityController.update);
+    return router;
+}
 
-module.exports = router;
+
