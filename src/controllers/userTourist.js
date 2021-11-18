@@ -41,6 +41,16 @@ const fetchAll = async (req, res, next) => {
     }
 };
 
+const fetchById = async (req, res, next) => {
+    try {
+        const { id } = req.body;
+        const response = await CrudService.fetchById(id);
+        res.send(response);
+    } catch (err) {
+        next(err);
+    }
+};
+
 const deleteUser = async (req, res, next) => {
     try {
         const response = await CrudService.logicDeleteEntity(req.body.id);
@@ -90,5 +100,6 @@ module.exports = {
     fetchAll,
     deleteUser,
     update,
-    updateItinerary
+    updateItinerary,
+    fetchById
 };

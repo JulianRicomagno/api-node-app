@@ -7,6 +7,7 @@ module.exports = router => {
     router.delete('/delete', UserTourist.deleteUser);
     router.post('/update', UserTourist.update);
     router.post('/updateitinerary', UserTourist.updateItinerary);
+    router.get('/fetchbyid', UserTourist.fetchById);
     return router;
 }
 
