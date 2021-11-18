@@ -7,7 +7,7 @@ module.exports = router => {
     router.delete('/delete', UserTouristController.deleteUser);
     router.post('/update', UserTouristController.update);
     router.post('/updateitinerary', UserTouristController.updateItinerary);
-    router.get('/fetchbyid', UserTouristController.fetchById);
+    router.get('/search/:id', UserTouristController.fetchById);
     return router;
 }
 

@@ -42,7 +42,7 @@ const fetchAll = async (req, res, next) => {
 
 const fetchById = async (req, res, next) => {
     try {
-        const { id } = req.body;
+        const id = req.params.id;
         const response = await CrudService.fetchById(id);
         res.send(response);
     } catch (err) {

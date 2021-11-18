@@ -33,7 +33,7 @@ const fetchAll = async (req, res, next) => {
 
 const fetchById = async (req, res, next) => {
     try {
-        const { id } = req.body;
+        const id = req.params.id;
         const response = await CrudService.fetchById(id);
         res.send(response);
     } catch (err) {
@@ -58,8 +58,8 @@ const update = async (req, res, next) => {
 
 const searchByname = async (req, res, next) => {
     try {
-        const { name } = req.body;
-        const response = await CrudService.searchByname("Attraction",name);
+        const name = req.params.name
+        const response = await CrudService.searchByName("Attraction", name);
         res.send(response)
     } catch (err) {
         res.send(err);
@@ -68,10 +68,11 @@ const searchByname = async (req, res, next) => {
 
 const searchByType = async (req, res, next) => {
     try {
-        const { typeAttraction } = req.body;
+        const typeAttraction = req.params.type;
+        console.log(typeAttraction)
         const response = await AttractionService.searchByType(typeAttraction);
+        //Hacer filtro de las no borradas
         res.send(response)
-        console.log(response)
     } catch (err) {
         res.send(err);
     }

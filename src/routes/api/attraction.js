@@ -5,10 +5,10 @@ const { AttractionController } = require('../../controllers');
 module.exports = router => {
     router.post('/create', validate(schema), AttractionController.create);
     router.get('/fetchall', AttractionController.fetchAll);
-    router.get('/id', AttractionController.fetchById);
+    router.get('/searchbyid/:id', AttractionController.fetchById);
     router.patch('/update', AttractionController.update);
-    router.get('/search', AttractionController.searchByname);
-    router.get('/search/type', AttractionController.searchByType);
+    router.get('/searchbyname/:name', AttractionController.searchByname);
+    router.get('/searchbytype/:type', AttractionController.searchByType);
     router.get('/types', AttractionController.types);
     return router;
 }
