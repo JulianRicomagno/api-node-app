@@ -12,6 +12,7 @@ const login = async (req, res, next) => {
             passwd,
             device
         } = req.body;
+  
         let user = "";
         if (USER_DEVICE_ADMIN === device) {
             user = await AuthService.checkAttribute("UserMunicipality", email, "email");
@@ -82,14 +83,13 @@ const passRecovery = async (req, res, next) => {
             length: 6,
             numbers: true
         });
-        console.log(user)
+
         const salt = bcryptjs.genSaltSync(10);
         const passwdHash = bcryptjs.hashSync(passwd, salt);
         const entity = { ...user, "passwd": passwdHash };
         const isUpdate = await CrudService.update(entity);
-
         const response = await EmailService.send(user.email, user.userName, passwd);
-        console.log(response)
+
         if (response && isUpdate.status == 204) {
             res.status(200).json({
                 msg: "Se envió un email a la casilla con su nueva password"

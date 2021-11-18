@@ -20,7 +20,7 @@ const send = async (to, name, passwd) => {
         subject: "[Aplicacion Posadas] Nueva password",
         html: `
               <h1>¡Hola ${name}!</h1>
-              <p>A continuación te damos tu nueva password, recorda que podes cambiarla cuando desees desde el menu "Mi cuenta" </p>
+              <p>A continuación te damos tu nueva password, recorda que podes cambiarla cuando desees desde el menu "Mi cuenta". </p>
               <br/>
               <p>Su nueva password es: <strong>${passwd}</strong </p>
               <br/>
