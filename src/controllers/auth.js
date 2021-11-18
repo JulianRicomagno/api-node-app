@@ -96,19 +96,36 @@ const passRecovery = async (req, res, next) => {
             })
         }
     } catch (error) {
-            res.status(400).json({
-                msg: "Algo salió mal, no se puedo enviar el email"
-            })
+        res.status(400).json({
+            msg: "Algo salió mal, no se puedo enviar el email"
+        })
     }
-
-
-
-
-
 }
 
 
+const checkEmail = async (req, res, next) => {
+    try {
+        const { email } = req.body;
+        const user = await AuthService.checkAttribute("UserTourist", email, "email");
+
+        if (user) {
+            return res.status(400).json({
+                msg: "El email ya se encuentra en uso",
+                status: 400
+            })
+        } else {
+            return res.status(200).json({
+                msg: "Ok",
+                status: 200
+            })            
+        }
+    } catch (err) {
+        next(err);
+    }
+}
+
 module.exports = {
     login,
-    passRecovery
+    passRecovery,
+    checkEmail
 }
