@@ -25,7 +25,8 @@ const fetchById = async (id) => {
         method: 'get',
         params: { options: "keyValues" }
     });
-    return response.data;
+    const dataClean = response.data.map(data => { return Utils.cleanKeys(data, ["passwd"]) } );
+    return dataClean;
 }
 
 const searchByName = async (typeEntity, name) => {
