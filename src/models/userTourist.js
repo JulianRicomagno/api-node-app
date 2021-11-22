@@ -26,7 +26,7 @@
 //         'dayTo': 'Date',
 //         'totalDays' :[ Es un Array de dias. Adentro tiene un Array de atracciones.
 //                 {
-//                 'attendanceDate': "2021-10-05",
+//                 'attendanceDate': "2021-c05",
 //                 'isDayOff' : 'Boolean',
 //                 'attraction': [{
 //                     'time': 'Date',

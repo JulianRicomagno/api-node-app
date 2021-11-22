@@ -29,13 +29,12 @@ const fetchById = async (id) => {
 }
 
 const searchByName = async (typeEntity, name) => {
-    console.log("entro")
     const response = await axios({
         url: `${FIWARE_URL}/entities/`,
         method: 'get',
         params: {
             type: typeEntity,
-            q: `name==${name}`,
+            q: `name==${name};isDeleted==false`,
             options: "keyValues",
         }
     });

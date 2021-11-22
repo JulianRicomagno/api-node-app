@@ -10,6 +10,7 @@ module.exports = router => {
     router.get('/searchbyname/:name', AttractionController.searchByname);
     router.get('/searchbytype/:type', AttractionController.searchByType);
     router.get('/types', AttractionController.types);
+    router.post('/import', AttractionController.importData);
     return router;
 }
 

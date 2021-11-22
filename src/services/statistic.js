@@ -18,7 +18,7 @@ const create = async (newAttraction, generalInfo) => {
             "nationality": { "value": generalInfo.nationality },
             "country": { "value": generalInfo.country },
             "city": { "value": generalInfo.city },
-            "gender": { "value": generalInfo.city },
+            "gender": { "value": generalInfo.gender },
             "typeAttraction": { "value": newAttraction.typeAttraction },
             "nameAttraction": { "value": newAttraction.name },
             "attendanceDate": { "value": newAttraction.attendanceDate },

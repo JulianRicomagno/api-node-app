@@ -86,6 +86,17 @@ const types = async (req, res, next) => {
     }
 }
 
+const importData = async (req, res, next) => {
+    try {
+        const data = req.body;
+        data.forEach(attraction => { AttractionService.create(attraction.name, attraction.description, attraction.typeAttraction, attraction.image, attraction.rating, attraction.dateHour, attraction.location, attraction.address) });
+
+        res.json({ 'msg' : 'ok'});
+
+    } catch (err) {
+        next(err);
+    }
+}
 
 module.exports = {
     create,
@@ -94,6 +105,7 @@ module.exports = {
     update,
     searchByname,
     searchByType,
-    types
+    types,
+    importData
 }
 
