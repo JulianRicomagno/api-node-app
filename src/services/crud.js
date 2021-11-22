@@ -25,7 +25,7 @@ const fetchById = async (id) => {
         method: 'get',
         params: { options: "keyValues" }
     });
-    const dataClean = response.data.map(data => { return Utils.cleanKeys(data, ["passwd"]) } );
+    const dataClean = Utils.cleanKeys(response.data, ["passwd"]);
     return dataClean;
 }
 
