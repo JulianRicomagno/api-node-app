@@ -12,7 +12,7 @@ const fetchAll = async (req, res, next) => {
 const importData = async (req, res, next) => {
     try {
         const data = req.body;
-        data.forEach(statistic => { StatisticService.create(data.generalInfo, data.newAttraction) });
+        data.forEach(statistic => { StatisticService.create(statistic.generalInfo, statistic.newAttraction) });
 
         res.json({ 'msg' : 'ok'});
 
