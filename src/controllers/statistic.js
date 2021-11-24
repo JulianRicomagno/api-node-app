@@ -1,4 +1,4 @@
-const { CrudService } = require('../services');
+const { CrudService, StatisticService } = require('../services');
 
 const fetchAll = async (req, res, next) => {
     try {
@@ -9,6 +9,19 @@ const fetchAll = async (req, res, next) => {
     }
 };
 
+const importData = async (req, res, next) => {
+    try {
+        const data = req.body;
+        data.forEach(statistic => { StatisticService.create(data.generalInfo, data.newAttraction) });
+
+        res.json({ 'msg' : 'ok'});
+
+    } catch (err) {
+        next(err);
+    }
+}
+
 module.exports = {
-    fetchAll
+    fetchAll,
+    importData
 };

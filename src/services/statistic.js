@@ -22,6 +22,7 @@ const create = async (newAttraction, generalInfo) => {
             "typeAttraction": { "value": newAttraction.typeAttraction },
             "nameAttraction": { "value": newAttraction.name },
             "attendanceDate": { "value": newAttraction.attendanceDate },
+            "hour": { "value": newAttraction.hour },
             "isDeleted": { "value": false}
         }
     });
