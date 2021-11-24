@@ -21,7 +21,7 @@ const create = async (name , description, typeAttraction, image, rating, dateHou
             "dateAndHour": { "value": dateHour },
             "location": { "value": location },
             "address": { "value": address },                        
-            "description": { "value": description },
+            "description": {"type":"Text", "value": description },
             "typeAttraction": { "value": typeAttraction },
             "createdAt": { "value":  moment(new Date()).format(dateFormat) },
             "updatedAt": { "value":  moment(new Date()).format(dateFormat) },                        
