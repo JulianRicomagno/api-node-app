@@ -1,11 +1,11 @@
-const {Router} = require('express');
-const { validateJWT } = require('./middlewares/validate-jwt');
+const { Router } = require("express");
+const { validateJWT } = require("./middlewares/validate-jwt");
 
 class Routes {
-    static configure(app) {
-        app.use('/api' , require('./api')(Router()));
-        app.use('/public-api', require('./public-api')(Router()));
-    }
+  static configure(app) {
+    app.use("/api", validateJWT, require("./api")(Router()));
+    app.use("/public-api", require("./public-api")(Router()));
+  }
 }
 
 module.exports = Routes;
