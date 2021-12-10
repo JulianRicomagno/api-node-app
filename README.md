@@ -2,9 +2,7 @@
 
 ---
 
-### Instrucciones Técnicas
-
-## 🛠 Installation
+### 🛠 Installation
 
 1. Solicitar al equipo de Desarrolladores el archivo .ENV
 2. Clone this project.
